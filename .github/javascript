@@ -1,0 +1,87 @@
+const selected = new Set([]);
+const lottery = new Set([]);
+// const check = function(arr_selected, arr_lottery);
+let arr_selected = new Array(6);
+let arr_lottery = new Array(7);
+let count = 0;
+let count1st = 0;
+let count2nd = 0;
+let count3rd = 0;
+let count4th = 0;
+let count5th = 0;
+let temp;
+
+const getLottoNums = user => {
+    const lottoNums = new Set();
+    let bonusNum = 0;
+    
+    count++;
+
+    while (lottoNums.size < (user == 'user' ? 6 : 7)) {
+        lottoNums.add(Math.floor(Math.random() * 45) + 1);
+    }
+
+    return Array.from(lottoNums).map(ele => +ele).sort((a, b) => a - b);
+};
+
+arr_selected = getLottoNums('user');
+
+
+// for (let i = 0; i < 6; i++) {
+//     selected.add(Math.floor(Math.random() * 45) + 1);
+// }
+
+// for (let i = 0; i < 6; i++) {
+//     lottery.add(Math.floor(Math.random() * 45 + 1));
+// }
+
+// selected.forEach(value =>
+//     for (let i = 0; i < 6; i++) {
+//         arr_selected[i] = value;
+//     }
+// )
+// console.log('사용자의 복권 번호 :');
+// console.log(arr_selected);
+
+
+const check = function(arr_selected, arr_lottery) {
+    for (let i = 0; i < 6; i++) {
+        for (let j = 0; j < 6; j++) {
+            if (arr_selected[i] == arr_lottery[j]) {
+                temp++;
+            }
+        }
+    }
+
+    return temp;    
+}
+
+
+while (1) {
+    if (count == 1000000) {
+        break;
+    }
+
+    arr_lottery = getLottoNums('machine');
+    temp = check();
+
+    switch(temp) {
+        case 3:
+            count5th++;
+            break;
+        case 4:
+            count4th++;
+            break;
+        case 5:
+            count3rd++;
+            break;
+        case 6:
+            count1st++;
+            break;
+    }
+}
+
+
+
+console.log(getLottoNums('user'));
+console.log(getLottoNums('machine'));
